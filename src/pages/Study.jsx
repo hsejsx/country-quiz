@@ -9,7 +9,7 @@ export default function Study() {
     fetch(
       `https://apis.data.go.kr/1262000/CountryBasicService/getCountryBasicList?serviceKey=${
         import.meta.env.VITE_APP_SERVICE_KEY
-      }&numOfRows=10`
+        }&numOfRows=200`
     )
       .then(res => res.text())
       .then(data => {
