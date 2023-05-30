@@ -1,7 +1,12 @@
+import { CountriesProvider } from './context/CountriesContext';
+import Study from './pages/Study';
+
 function App() {
   return (
     <>
-      <h1>hi</h1>
+      <CountriesProvider>
+        <Study />
+      </CountriesProvider>
     </>
   );
 }
