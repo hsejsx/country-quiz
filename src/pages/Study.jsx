@@ -6,6 +6,10 @@ export default function Study() {
   const regex = /수도\s*:\s*([^)&\s]+(?:\)[^\s]*)?)/;
 
   useEffect(() => {
+    const cachedData = localStorage.getItem('countriesData');
+    if (cachedData) {
+      setCountries(JSON.parse(cachedData));
+    } else {
     fetch(
       `https://apis.data.go.kr/1262000/CountryBasicService/getCountryBasicList?serviceKey=${
         import.meta.env.VITE_APP_SERVICE_KEY
@@ -23,17 +27,25 @@ export default function Study() {
                 .find(child => child.name === 'basic')
                 .value.match(regex)[1]
             : '',
-          countryName: item.children.find(child => child.name === 'countryName')
-            .value,
+            countryName: item.children.find(
+              child => child.name === 'countryName'
+            ).value,
           imgUrl: item.children
             .find(child => child.name === 'imgUrl')
             .value.replace('&amp;', '&'),
         }));
         console.log(extractedData);
         setCountries(extractedData);
-        setCountries(prev => prev.filter(country => country.capital));
+          setCountries(prev => {
+            localStorage.setItem(
+              'countriesData',
+              JSON.stringify(prev.filter(country => country.capital))
+            );
+            return prev.filter(country => country.capital);
+          });
       })
       .catch(err => console.log(err));
+    }
   }, []);
   return <div></div>;
 }
