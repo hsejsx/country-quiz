@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import XMLParser from 'react-xml-parser';
 
 export default function Study() {
+  const [countries, setCountries] = useState();
+  const regex = /수도\s*:\s*([^)&\s]+(?:\)[^\s]*)?)/;
+
   useEffect(() => {
     fetch(
       `https://apis.data.go.kr/1262000/CountryBasicService/getCountryBasicList?serviceKey=${
@@ -13,12 +16,22 @@ export default function Study() {
         let xml = new XMLParser().parseFromString(data);
         const items = xml.children[1].children[0].children;
         const extractedData = items.map(item => ({
-          basic: item.children.find(child => child.name === 'basic').value,
+          capital: item.children
+            .find(child => child.name === 'basic')
+            .value.match(regex)
+            ? item.children
+                .find(child => child.name === 'basic')
+                .value.match(regex)[1]
+            : '',
           countryName: item.children.find(child => child.name === 'countryName')
             .value,
-          imgUrl: item.children.find(child => child.name === 'imgUrl').value,
+          imgUrl: item.children
+            .find(child => child.name === 'imgUrl')
+            .value.replace('&amp;', '&'),
         }));
         console.log(extractedData);
+        setCountries(extractedData);
+        setCountries(prev => prev.filter(country => country.capital));
       })
       .catch(err => console.log(err));
   }, []);
