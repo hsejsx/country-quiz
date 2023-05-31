@@ -1,11 +1,11 @@
+import { Outlet } from 'react-router-dom';
 import { CountriesProvider } from './context/CountriesContext';
-import Study from './pages/Study';
 
 function App() {
   return (
     <>
       <CountriesProvider>
-        <Study />
+        <Outlet />
       </CountriesProvider>
     </>
   );
