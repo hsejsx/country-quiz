@@ -6,34 +6,37 @@ export default function Study() {
 
   if (countries)
     return (
-      <section className='flex flex-col w-full mx-auto max-w-xl'>
-        {countries.map((country, index) => (
-          <section key={index} className='md:flex items-start mb-4'>
-            <div className='w-full h-auto max-w-xl md:flex-shrink-0 md:basis-[40%] mb-2'>
-              <img
-                className='w-full h-full object-cover'
-                src={country.imgUrl}
-                alt=''
-              />
-            </div>
-            <table className='table-auto flex-grow text-center'>
-              <thead>
-                <tr>
-                  <th className='px-1 py-2'>번호</th>
-                  <th className='px-4 py-2'>나라</th>
-                  <th className='px-4 py-2'>수도</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className='border px-4 py-2'>{index + 1}</td>
-                  <td className='border px-4 py-2'>{country.countryName}</td>
-                  <td className='border px-4 py-2'>{country.capital}</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        ))}
-      </section>
+      <div className='overflow-x-auto'>
+        <table className='min-w-full divide-y divide-gray-200'>
+          <thead>
+            <tr>
+              <th className='py-3 px-6 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                국기
+              </th>
+              <th className='py-3 px-6 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                번호
+              </th>
+              <th className='py-3 px-6 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                나라
+              </th>
+              <th className='py-3 px-6 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                수도
+              </th>
+            </tr>
+          </thead>
+          <tbody className='bg-white divide-y divide-gray-200'>
+            {countries.map((country, index) => (
+              <tr key={index}>
+                <td className='py-4 px-6'>
+                  <img src={country.imgUrl} alt='Flag' className='h-6 w-6' />
+                </td>
+                <td className='py-4 px-6'>{index + 1}</td>
+                <td className='py-4 px-6'>{country.countryName}</td>
+                <td className='py-4 px-6'>{country.capital}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
 }
