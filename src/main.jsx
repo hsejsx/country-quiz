@@ -5,6 +5,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Study from './pages/Study.jsx';
 import Home from './pages/Home.jsx';
+import Quiz from './pages/Quiz.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: '/study',
         element: <Study />,
+      },
+      {
+        path: '/country-quiz',
+        element: <Quiz type='country' />,
+      },
+      {
+        path: '/capital-quiz',
+        element: <Quiz type='capital' />,
       },
     ],
   },
